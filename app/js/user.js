@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
           contentEditBtn = document.querySelectorAll('.content__edit-btn'),
           ellipsisDel = document.querySelectorAll('.ellipsis__del'),
           userCoverEdit = document.querySelector('.userCover__edit'),
-          errorlist = document.querySelector('.errorlist');
+          errorlist = document.querySelector('.errorlist'),
+          coverForm = document.querySelector('.cover__form');
 
     let target, parentElement, contentTextEdit, contentPanel;
 
@@ -133,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-
             return cookieValue
         }
 
@@ -175,21 +175,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    const changeCoverPhoto = (e) => {
-        const fileName = userCoverEdit.files[0]
-        const target = e.target;
+    const changeCoverPhoto = () => {
 
-        const formData = new FormData()
-        formData.append('file', target.files[0])
+        const formData = new FormData(coverForm)
+        const headers = {'X-CSRFToken': getCookie()}
 
-        const header = {
-            'Content-Type': 'multipart/form-data',
-        }
+        const location = document.location.pathname
+        const userId = location.match(/\d/g).join('')
 
-        const headers = {...header, ...getCookie()}
+        formData.append('user_id', userId)
 
         postData(formData, 'http://localhost:8000/users/changeCover/photo', headers)
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response)
+                document.location.reload()
+            })
     }
 
     const delErrorList = () => {

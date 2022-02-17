@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const errors = {
             errorPass: 'Пароли не совпадают',
-            errorInputs: 'Не все поля заполнены'
+            errorInputs: 'Не все поля заполнены',
+            errorEmail: 'Пользователь с таким email уже существует',
+            errorLogin: 'Пользователь с таким логином уже существует'
         }
 
         const getErrorText = text => {
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const createUser = e => {
             e.preventDefault()
 
+            let url;
             const formData = new FormData(form)
 
             if (detectedValidForm()) {
@@ -77,11 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: formData
                     })
                         .then(data => {
-                            console.log(data)
+                            url = data.url
                             return data.text()
                         })
                         .then(response => {
-                            console.log(response)
+                            if (response === errors.errorEmail || response === errors.errorLogin) getErrorText(response)
+                            else document.location = url
                         })
                 }
             }

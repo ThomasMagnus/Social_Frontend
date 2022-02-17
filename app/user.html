@@ -11,7 +11,7 @@
     <section class="userCover">
         <div class="userCover__img">
             <picture>
-                {% if cover_photo %}
+                {% if cover_photo != " "%}
                     <source srcset="{{ cover_photo }}" type="image/webp">
                     <img src="{{ cover_photo }}" alt="cover_photo">
                 {% else %}
@@ -32,13 +32,15 @@
                 <p class="userCover__name">{{ name }}</p>
             </div>
             <div class="userCover__edit_wrapper">
-                {% csrf_token %}
-                {{cover_form}}
-<!--                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>-->
-                <label class="input__file-button" for="input_file">
-                    <i class="fa fa-camera" aria-hidden="true"></i>
-                    <span class="input__file-button-text">Изменить изображение</span>
-                </label>
+                <form enctype="multipart/form-data" class="cover__form">
+                    {% csrf_token %}
+                    {{cover_form}}
+    <!--                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>-->
+                    <label class="input__file-button" for="input_file">
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+                        <span class="input__file-button-text">Изменить изображение</span>
+                    </label>
+                </form>
             </div>
         </div>
     </section>
@@ -46,9 +48,15 @@
         <section class="profile">
             <div class="profile__user back">
                 <div class="profile__photo">
-                    <picture>
+                <picture>
+                    {% if cover_photo != " "%}
+                        <source srcset="{{ cover_photo }}" type="image/webp">
+                        <img src="{{ cover_photo }}" alt="cover_photo">
+                    {% else %}
                         <source srcset="{% static 'img/cover.webp' %}" type="image/webp">
-                        <img src="{% static 'img/cover.jpg' %}" alt="profile-photo"></picture>
+                        <img src="{% static 'img/cover.jpg' %}" alt="cover_photo">
+                    {% endif %}
+                </picture>
                 </div>
                 <div class="profile__info">
                     <div class="profile__userLogo-wrapper">
