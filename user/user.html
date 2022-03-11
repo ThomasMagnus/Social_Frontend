@@ -1,0 +1,324 @@
+{% extends 'user_layout.html' %}
+{% load static %}
+
+{% block title %}Домашняя страница{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/user.min.css' %}">
+    <link rel="shortcat icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+{% endblock %}
+{% block main %}
+    <section class="userCover">
+        <div class="userCover__img">
+            <picture>
+                {% if cover_photo != " "%}
+                    <source srcset="{{ cover_photo }}" type="image/webp">
+                    <img src="{{ cover_photo }}" alt="cover_photo">
+                {% else %}
+                    <source srcset="{% static 'img/cover.webp' %}" type="image/webp">
+                    <img src="{% static 'img/cover.jpg' %}" alt="cover_photo">
+                {% endif %}
+            </picture>
+        </div>
+        <div class="userCover__bottom">
+            <div class="userCover__info">
+                <div class="userCover__photo-wrapper">
+                    <div class="userCover__photo">
+                        <picture>
+                            <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                            <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                    </div>
+                </div>
+                <p class="userCover__name">{{ name }}</p>
+            </div>
+            <div class="userCover__edit_wrapper">
+                <form enctype="multipart/form-data" class="cover__form">
+                    {% csrf_token %}
+                    {{cover_form}}
+    <!--                <input type="file" name="file" id="input_file" class="userCover__edit" multiple>-->
+                    <label class="input__file-button" for="input_file">
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+                        <span class="input__file-button-text">Изменить изображение</span>
+                    </label>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="section__wrapper">
+        <section class="profile">
+            <div class="profile__user back">
+                <div class="profile__photo">
+                <picture>
+                    {% if cover_photo != " "%}
+                        <source srcset="{{ cover_photo }}" type="image/webp">
+                        <img src="{{ cover_photo }}" alt="cover_photo">
+                    {% else %}
+                        <source srcset="{% static 'img/cover.webp' %}" type="image/webp">
+                        <img src="{% static 'img/cover.jpg' %}" alt="cover_photo">
+                    {% endif %}
+                </picture>
+                </div>
+                <div class="profile__info">
+                    <div class="profile__userLogo-wrapper">
+                        <div class="profile__userLogo">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user__logo"></picture>
+                        </div>
+                    </div>
+                    <p class="profile__name">{{ name }}</p>
+                </div>
+                <div class="profile__menu">
+                    <p class="profile__title">Мой профиль</p>
+                    <ul class="profile__list">
+                        <li class="profile__item">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-home icon" aria-hidden="true"></i>
+                                <span>Домой</span>
+                            </a>
+                        </li>
+                        <li class="profile__item">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-users icon" aria-hidden="true"></i>
+                                <span>Друзья</span>
+                            </a>
+                        </li>
+                        <li class="profile__item">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-camera icon" aria-hidden="true"></i>
+                                <span>Фото</span>
+                            </a>
+                        </li>
+                        <li class="profile__item">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-user-circle-o icon" aria-hidden="true"></i>
+                                <span>Группы</span>
+                            </a>
+                        </li>
+                        <li class="user__item">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                                <span>Новости</span>
+                            </a>
+                        </li>
+                        <li class="profile__item">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-cogs icon" aria-hidden="true"></i>
+                                <span>Настройки</span>
+                            </a>
+                        </li>
+                        <li class="profile__item logout">
+                            <a href="" class="profile__link">
+                                <i class="fa fa-sign-out icon" aria-hidden="true"></i>
+                                <span>Выйти</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="profile__friends back">
+                <p class="profile__title">Друзья</p>
+                <hr>
+                <ul class="profile__list-friends">
+                    <li class="profile__item-friends">
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
+                            <div class="profile__list-img">
+                                <picture>
+                                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                    <img src="{% static 'img/user_logo.jpg' %}" alt="friend_logo"></picture>
+                            </div>
+                            <p class="profile__item-name">Вася</p>
+                        </a>
+                    </li>
+                    <li class="profile__item-friends">
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
+                            <div class="profile__list-img">
+                                <picture>
+                                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                    <img src="{% static 'img/user_logo.jpg' %}" alt="cover_photo"></picture>
+                            </div>
+                            <p class="profile__item-name">Антон</p>
+                        </a>
+                    </li>
+                    <li class="profile__item-friends">
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
+                            <div class="profile__list-img">
+                                <picture>
+                                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                    <img src="{% static 'img/user_logo.jpg' %}" alt="cover_photo"></picture>
+                            </div>
+                            <p class="profile__item-name">Андрей</p>
+                        </a>
+                    </li>
+                    <li class="profile__item-friends">
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
+                            <div class="profile__list-img">
+                                <picture>
+                                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                    <img src="{% static 'img/user_logo.jpg' %}" alt="cover_photo"></picture>
+                            </div>
+                            <p class="profile__item-name">Тимур</p>
+                        </a>
+                    </li>
+                    <li class="profile__item-friends">
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
+                            <div class="profile__list-img">
+                                <picture>
+                                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                    <img src="{% static 'img/user_logo.jpg' %}" alt="cover_photo"></picture>
+                            </div>
+                            <p class="profile__item-name">Алексей</p>
+                        </a>
+                    </li>
+                    <li class="profile__item-friends">
+                        <a href="http://" target="_blank" rel="noopener noreferrer">
+                            <div class="profile__list-img">
+                                <picture>
+                                    <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                    <img src="{% static 'img/user_logo.jpg' %}" alt="cover_photo"></picture>
+                            </div>
+                            <p class="profile__item-name">Анастасия</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="profile__photos back">
+                <p class="profile__title">Мои фото</p>
+                <hr>
+                <div class="profile__photos-imgs">
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                        <div class="profile__photo-img">
+                            <picture>
+                                <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="content">
+            <form class="content__form">
+                {% csrf_token %}
+                <textarea name="comment" id="comment" placeholder="Напишите о чем думаете..."></textarea>
+                <button class="content__btn">Напечатать</button>
+            </form>
+            <div class="content__recordings">
+                <ul class="content__list">
+                    {% for item in user_post_dict %}
+                        <li class="content__item back">
+                        <div class="content__top">
+                            <div class="content__info">
+                                <div class="img">
+                                    <a href="#" class="logo__link">
+                                        <picture>
+                                            <source srcset="{% static 'img/user_logo.webp' %}" type="image/webp">
+                                            <img src="{% static 'img/user_logo.jpg' %}" alt="user_photo"></picture>
+                                    </a>
+                                </div>
+                                <div class="content__top-descr">
+                                    <p class="user_name">
+                                        <a href="#">{{ name }}</a>
+                                    </p>
+                                    <div class="content__info-time">
+                                        <i class="fa fa-pencil" aria-hidden="true"
+                                           title="Опубликовано: {{ item.user_date }}"></i>
+                                        <p class="time_create">Опубликовано: {{ item.user_date }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ellipsis">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                <ul class="ellipsis__list">
+                                    <li class="ellipsis__item edit-post">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        Редактировать
+                                    </li>
+                                    <li class="ellipsis__item ellipsis__del">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        Удалить
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="content__text-edit">
+                            <p class="content__text" data-id={{item.id}}>{{ item.post }}</p>
+                            <div class="content__panel">
+                                <div class="cancel__wrapper">
+                                    <div class="content__cancel" title="Отмена">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <button class="content__edit-btn">Опубликовать</button>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        <section class="community back">
+            <div class="community__news">
+                <ul class="community__list">
+                    {% for item in news_data %}
+                        <li class="community__item">
+                            <a href="{{ item.link }}" class="community__link" target="_blank">{{item.title}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/user.js' %}"></script>
+{% endblock %}

@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ellipsisDel = document.querySelectorAll('.ellipsis__del'),
           userCoverEdit = document.querySelector('.userCover__edit'),
           errorlist = document.querySelector('.errorlist'),
-          coverForm = document.querySelector('.cover__form');
+          coverForm = document.querySelector('.cover__form'),
+          searchInput = document.querySelector('.search__input'),
+          searchForm = document.querySelector('.search');
 
     let target, parentElement, contentTextEdit, contentPanel;
 
@@ -196,6 +198,91 @@ document.addEventListener('DOMContentLoaded', () => {
         errorlist.style.display = 'none'
     }
 
+    const removeSearchFriendsText = e => {
+        const target = e.target
+
+        try {
+            if (target.classList !== '.search__friendItem a') {
+                document.querySelector('.search__friendList').remove()
+            }
+        } catch {}
+    }
+
+    const searchUsers = () => {
+
+        class Users {
+            constructor(name, id, avatar, limit = 7) {
+                this.name = name;
+                this.id = id;
+                this.avatar = avatar;
+                this.limit = limit;
+            }
+
+            createUSer(ul) {
+
+                const createHtml = img => {
+                    return (`
+                            <a href=http://localhost:8000/friends/${this.id}>
+                                <div class="search__img">
+                                    <img src="${img}" alt="friend_img">
+                                </div>
+                                ${this.name}
+                            </a>
+                        `)
+                }
+
+                const html = this.avatar ? createHtml(this.avatar) : createHtml('/static/img/user_logo.jpg');
+
+                const li = document.createElement('li')
+                li.classList.add('search__friendItem')
+                li.innerHTML = html
+
+                ul.append(li)
+
+            }
+        }
+
+        const clearSearchPanel = () => {
+            try {
+                searchForm.querySelector('.search__friendList').remove()
+            } catch (e) {}
+        }
+
+        if (searchInput.value.trim()) {
+
+            let dataDict = {
+                friendsSearch: searchInput.value.toLowerCase()
+            }
+
+            let data = JSON.stringify(dataDict)
+
+            postData(data, 'http://localhost:8000/users/friends/searchFriend/', getCookie())
+                .then(response => response.json())
+                .then(data => {
+                    clearSearchPanel()
+                    const ul = document.createElement('ul')
+                    ul.classList.add('search__friendList')
+                    searchForm.append(ul)
+
+                    data.forEach(item => {
+                        let users;
+                        console.log(item)
+                        if (data.length > 7){
+                            users = new Users(item[0], item[1], item[2])
+                        } else {
+                            users = new Users(item[0], item[1], item[2], data.length)
+                        }
+
+                        users.createUSer(ul)
+                        console.log(`User: ${item[0]}, id: ${item[1]}`)
+                    })
+                })
+            }
+        else {
+            clearSearchPanel()
+        }
+    }
+
 
     userCover.addEventListener("mouseenter", showEdit)
     userCover.addEventListener("mouseleave", hideEdit)
@@ -206,6 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
     contentBtn.addEventListener('click', e => postDataForm(e))
     ellipsisDel.forEach(item => item.addEventListener('click', e => deletePost(e)))
     userCoverEdit.addEventListener('change', changeCoverPhoto)
+    searchInput.addEventListener('input', searchUsers)
+    document.body.addEventListener('click', (e) => removeSearchFriendsText(e))
 
     delErrorList()
 })
