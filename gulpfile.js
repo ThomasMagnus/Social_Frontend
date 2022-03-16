@@ -1,4 +1,4 @@
-const project_folder = 'C:/users/emmag/PycharmProjects/SocialNetwork/users/templates',
+const project_folder = 'C:/users/emmag/PycharmProjects/SocialNetwork/friends/templates',
       static_folder = 'C:/users/emmag/PycharmProjects/SocialNetwork/static',
       source_folder = 'app',
       fs = require('fs');
@@ -14,7 +14,7 @@ const path = {
 
     src: {
         html: [source_folder + '/*.html', '!' + source_folder + '/_*.html'],
-        css: source_folder + '/scss/user_layout-double.scss',
+        css: source_folder + '/scss/friends_menu.scss',
         js: source_folder + '/js/*.js',
         img: source_folder + '/img/**/*.{png,jpg,svg,gif,ico,webp}',
         fonts: source_folder + '/fonts/*.ttf'
@@ -32,21 +32,21 @@ const path = {
 }
 
 const {src, dest} = require('gulp'),
-      gulp = require('gulp'),
-      browsersync = require('browser-sync').create(),
-      fileinclude = require('gulp-file-include'),
-      del = require('del'),
-      scss = require('gulp-sass')(require('sass')),
-	autoprefixer = require('gulp-autoprefixer'),
-	group_media = require('gulp-group-css-media-queries'),
-	clean_css = require('gulp-clean-css'),
-	rename = require('gulp-rename'),
-	uglify_es = require('gulp-uglify-es').default,
-	babel = require('gulp-babel'),
-	imagemin = require('gulp-imagemin'),
-	webp = require('gulp-webp'),
-	webpHtml = require('gulp-webp-html'),
-	webpcss = require('gulp-webpcss');
+    gulp = require('gulp'),
+    browsersync = require('browser-sync').create(),
+    fileinclude = require('gulp-file-include'),
+    del = require('del'),
+    scss = require('gulp-sass')(require('sass')),
+    autoprefixer = require('gulp-autoprefixer'),
+    group_media = require('gulp-group-css-media-queries'),
+    clean_css = require('gulp-clean-css'),
+    rename = require('gulp-rename'),
+    uglify_es = require('gulp-uglify-es').default,
+    babel = require('gulp-babel'),
+    imagemin = require('gulp-imagemin'),
+    webp = require('gulp-webp'),
+    webpHtml = require('gulp-webp-html'),
+    webpcss = require('gulp-webpcss');
 
 
 const browserSync = params => {
